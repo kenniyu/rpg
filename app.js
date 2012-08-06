@@ -136,7 +136,8 @@ nowjs.on('connect', function() {
 		isPlaying: false,
 		bombRadius: 1,
 		currentBombs: [],
-		maxBombs: 1
+		maxBombs: 1,
+		isReady: false
 	}
 
 	if (gameHash['isPlaying'] == false && gameHash['currentPlayers'].length < 4) {
@@ -218,6 +219,8 @@ everyone.now.submitGameStart = function() {
 				gameHash['currentPlayers'].indexOf(clientId) > -1 && 
 				gameHash['confirmedPlayers'].indexOf(clientId) == -1	) {
 		gameHash['confirmedPlayers'].push(clientId);
+		userObj['isReady'] = true;
+		updateUsersList();
 		if (gameHash['confirmedPlayers'].length == gameHash['currentPlayers'].length) {
 			initGame();
 		} else {
@@ -504,7 +507,8 @@ function endGame() {
 	
 	console.log(gameHash);
 	
-	var newPlayerId;
+	var newPlayerId,
+			userObj;
 	
 	// we ahve a winner, broadcast
 	
@@ -521,6 +525,12 @@ function endGame() {
 		}
 	}
 	
+	// everyone is waiting
+	for (var clientId in usersHash) {
+		userObj = usersHash[clientId];
+		userObj['isReady'] = false;
+	}
+	
 	// clear confirmed players and dead players
 	gameHash['confirmedPlayers'] = [];
 	gameHash['deadPlayers'] = [];
@@ -528,8 +538,13 @@ function endGame() {
 	// update game controls
 	if (gameHash['currentPlayers'].length >= 2) {
 		everyone.now.showGameStartButton();		
+	} else {
+		everyone.now.hideGameStartButton();		
 	}
 	everyone.now.hideGameInstructions();
+	
+	// update usersList
+	updateUsersList();
 	
 	// we're ready for a new game
 	console.log(gameHash);
@@ -550,6 +565,13 @@ everyone.now.submitChat = function(message) {
 	var clientId = this.user.clientId,
 			userObj	= usersHash[clientId];
 	everyone.now.updateChat(userObj, urlify(encodeHTML(message)));
+}
+
+everyone.now.submitNickname = function(nickname) {
+	var clientId = this.user.clientId,
+			userObj	= usersHash[clientId];
+	userObj.username = encodeHTML(nickname);
+	everyone.now.updateNickname(userObj);
 }
 
 function removePlayer(userObj) {

@@ -1,7 +1,7 @@
 <html>
 
 	<head>
-	  <title>rpg</title>
+	  <title>VIMmerman</title>
 
 		<link rel='stylesheet' href='../stylesheets/style.css' />
 	  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
@@ -25,13 +25,14 @@
 				<div class="game-controls-wrapper">
 					<div class="game-instructions">
 						<div class="buffer"></div>
-						<a href="#" class="button move-left" title="h">h &larr;</a>
-						<a href="#" class="button move-down" title="j">j &darr;</a>
-						<a href="#" class="button move-up" title="k">k &uarr;</a>
-						<a href="#" class="button move-right" title="l">l &rarr;</a>
+						<a href="#" class="button direction" title="h" data-control-id="move-left">h &larr;</a>
+						<a href="#" class="button direction" title="j" data-control-id="move-down">j &darr;</a>
+						<a href="#" class="button direction" title="k" data-control-id="move-up">k &uarr;</a>
+						<a href="#" class="button direction" title="l" data-control-id="move-right">l &rarr;</a>
+						<a href="#" class="button set-bomb" title="space" data-control-id="set-bomb">space <img src="images/icon-bomb.png"></img></a>
 					</div>
 					<div class="game-start">
-						<a href="#" class="button" id="start-game-btn">Start Game</a>
+						<a href="#" class="button" id="start-game-btn" data-control-id="start-game">Start Game</a>
 					</div>
 				</div>
 				
@@ -54,6 +55,9 @@
 						<input type="text" id="chat-input" placeholder="enter a message..." />
 					</div>
 					
+					<div class="nickname-input-wrapper">
+						<input type="text" id="nickname-input" placeholder="enter your nickname..." />
+					</div>
 				</div>
 				
 			</div>

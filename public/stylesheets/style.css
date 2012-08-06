@@ -38,6 +38,7 @@
 
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-color: black;
 }
 
 a {
@@ -59,6 +60,7 @@ a {
 	height: 690px;
 	float: left;
 /*	border: 1px solid black;*/
+	border-right: 1px solid #ccc;
 }
 
 .game-main .game-map-wrapper {
@@ -81,6 +83,8 @@ a {
 	height: 30px;
 	float: left;
 	position: relative;
+	line-height: 30px;
+	text-align: center;
 }
 
 .game-map-wrapper .map-zoomed .row .tile.selected {
@@ -157,6 +161,7 @@ a {
 	width: 840px;
 	height: 60px;
 	background-color: #333;
+	border-radius: 0 0 0 3px;
 }
 
 .game-main .game-controls-wrapper .game-start, .game-main .game-controls-wrapper .game-instructions {
@@ -173,6 +178,15 @@ a {
 	text-align: center;
 }
 
+.game-main .game-controls-wrapper .game-instructions .set-bomb {
+	width: 70px;
+}
+
+.game-main .game-controls-wrapper .game-instructions .set-bomb img {
+	height: 14px;
+}
+
+
 .game-main .game-controls-wrapper .game-instructions .buffer {
 	width: 50px;
 	display: inline-block;
@@ -186,7 +200,23 @@ a {
 
 .game-sidebar {
 	float: left;
-	width: 300px;
+	width: 299px;
+}
+
+.game-sidebar .users-wrapper .users-list .user-item .user-status {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+	margin-right: 5px;
+}
+
+.game-sidebar .users-wrapper .users-list .user-item .user-status.ready {
+	background-color: #33ee33;
+}
+
+.game-sidebar .users-wrapper .users-list .user-item .user-status.waiting {
+	background-color: rgb(247, 204, 33);
 }
 
 ul {
@@ -221,7 +251,7 @@ ul li:nth-child(even) {
 }
 
 .game-sidebar .chat-wrapper .chat-messages {
-	height: 352px;
+	height: 387px;
 	border-bottom: 1px solid #ccc;
 	overflow-y: auto;
 	font-size: 12px;
@@ -233,7 +263,16 @@ ul li:nth-child(even) {
 	border: 1px solid #ccc;
 	display: block;
 	width: 290px;
-	margin: 5px auto;
+	margin: 3px auto;
+}
+
+.game-sidebar .chat-wrapper .nickname-input-wrapper #nickname-input {
+	padding: 5px;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+	display: block;
+	width: 290px;
+	margin: 3px auto;
 }
 
 .game-sidebar .users-wrapper .heading, .game-sidebar .chat-wrapper .heading {

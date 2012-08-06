@@ -1,6 +1,6 @@
 {
   "name": "vimmerman",
-  "version": "0.0.1-2",
+  "version": "0.0.1-13",
   "private": true,
   "dependencies": {
     "express": "2.5.8",
@@ -9,7 +9,7 @@
     "connect": "2.4.x",
     "now": "0.8.x"
   },
-  "subdomain": "vimmerman",
+  "subdomain": "vimmerman3",
   "scripts": {
     "start": "app.js"
   },

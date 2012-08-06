@@ -38,30 +38,46 @@ $().ready(function() {
 		}
 	});
 	
-	$('.game-controls-wrapper .game-start').live('click', function(e) {
-		now.submitGameStart();
+	$('#nickname-input').live('keypress', function(e) {
+		var nickname = $(this).val().trim();
+		if (e.keyCode == 13 && nickname != '') {
+			console.log('submitting');
+			now.submitNickname(nickname);
+		}
+	});
+	
+	$('.game-controls-wrapper a').live('click', function(e) {
+		var $target = $(e.target),
+				targetDataAttr = $target.attr('data-control-id'),
+				triggerEvent = $.Event('keydown');
+				
+		if (targetDataAttr == 'start-game') {
+			now.submitGameStart();
+		}
 		e.preventDefault();
 	});
 	
 	$('.map-zoomed').live('keydown', function(e) {
+
 		var shifted = e.shiftKey,
 				keyCode	=	e.keyCode,
 				prefix;
-			
-		if (keyCode == 75 && !shifted) {
+
+				console.log(keyCode);
+		if ((keyCode == 75 || keyCode == 38) && !shifted) {
 			prefix = calculatePrefix();
 			now.makeMove('up', prefix);
 			cleanUp();
-		} else if (keyCode == 74 && !shifted) {
+		} else if ( (keyCode == 74 || keyCode == 40) && !shifted) {
 			prefix = calculatePrefix();
 			now.makeMove('down', prefix);
 			cleanUp();
-		} else if (keyCode == 72 && !shifted) {
+		} else if ( (keyCode == 72 || keyCode == 37) && !shifted) {
 			prefix = calculatePrefix();
 			now.makeMove('left', prefix);
 			cleanUp();
 
-		} else if (keyCode == 76 && !shifted) {
+		} else if ( (keyCode == 76 || keyCode == 39) && !shifted) {
 			prefix = calculatePrefix();
 			now.makeMove('right', prefix);
 			cleanUp();
@@ -186,14 +202,19 @@ now.initPlayer = function(userObj) {
 now.updateUsersList = function(usersHash) {
 	var userName,
 			userColor,
-			usersListHtml = '';
+			usersListHtml = '',
+			userStatus,
+			userObj;
 			
 	$('.users-list').empty();
 	for (var clientId in usersHash) {
-		userColor = usersHash[clientId].color;
-		userName = usersHash[clientId].username;
+		userObj = usersHash[clientId];
+		userColor = userObj.color;
+		userName = userObj.username;
+		userStatus = (userObj.isReady == true ? 'ready' : 'waiting');
 		
 		usersListHtml += '<li class="user-item">'+
+			'<span class="user-status '+userStatus+'"></span>'+
 			'<span class="user-name" style="color: '+userColor+'" data-user-id="'+clientId+'">'+userName+'</span>'+
 		'</li>';
 	}
@@ -201,11 +222,10 @@ now.updateUsersList = function(usersHash) {
 }
 
 now.updateNickname = function(userObj) {
-	var clientId = userObj.clientId,
-			$userItem = $('.user-item').find('span[data-user-id="'+clientId+'"]'),
+	var clientId = userObj.id,
+			$userNameItem = $('.user-name[data-user-id="'+clientId+'"]'),
 			username = userObj.username;
-			
-	$userItem.text(username);
+	$userNameItem.text(username);
 }
 
 now.initMap = function(map) {
@@ -213,7 +233,8 @@ now.initMap = function(map) {
 			num_cols	=	map[0].length,
 			tile_class,
 			$map		= $('.container-game .map-zoomed'),
-			$row;
+			$row,
+			label;
 			
 	$map.empty();
 	
@@ -221,10 +242,22 @@ now.initMap = function(map) {
 		$row = $('<div class="row" data-row-id="' + row + '"></div>');
 		for (var col = 0; col < num_cols; col++) {
 			tileClass = mapPieceEnum[map[row][col]];
-			$row.append('<div class="tile '+tileClass+'" data-cell-id="'+row+','+col+'"></div>');
+			if (row == 0 && col != 0 && col != num_cols - 1) {
+				label = col;
+			} else if (col == 0 && row != 0 && row != num_rows - 1) {
+				label = row;
+			} else if (row == num_rows - 1 && col != 0 && col != num_cols - 1) {
+				label = col;
+			} else if (col == num_cols - 1 && row != 0 && row != num_rows - 1) {
+				label = row;
+			} else {
+				label = '';
+			}
+			$row.append('<div class="tile '+tileClass+'" data-cell-id="'+row+','+col+'">'+label+'</div>');
 		}
 		$map.append($row);
 	}
+	$('.map-zoomed').focus();
 }
 
 now.setBombPosition = function(cellY, cellX) {
