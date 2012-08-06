@@ -1,0 +1,64 @@
+<html>
+
+	<head>
+	  <title>rpg</title>
+
+		<link rel='stylesheet' href='../stylesheets/style.css' />
+	  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+	  <script type="text/javascript" src="/nowjs/now.js"></script>
+		<script type="text/javascript" src="javascripts/rpg.js"></script>
+	</head>
+
+	<body>
+		<div class="container-game">
+			<div class="game-main">
+				
+				<div class="game-map-wrapper">
+					<div class="map-overview"></div>
+				
+					<div class="map-zoomed" tabindex="1">
+						
+					</div>
+					
+				</div>
+				
+				<div class="game-controls-wrapper">
+					<div class="game-instructions">
+						<div class="buffer"></div>
+						<a href="#" class="button move-left" title="h">h &larr;</a>
+						<a href="#" class="button move-down" title="j">j &darr;</a>
+						<a href="#" class="button move-up" title="k">k &uarr;</a>
+						<a href="#" class="button move-right" title="l">l &rarr;</a>
+					</div>
+					<div class="game-start">
+						<a href="#" class="button" id="start-game-btn">Start Game</a>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="game-sidebar">
+				<div class="users-wrapper">
+					<div class="heading">Players</div>
+					<ul class="users-list">
+					</ul>
+				</div>
+				
+				<div class="chat-wrapper">
+					
+					<div class="heading">Chat</div>
+					
+					<ul class="chat-messages"></ul>
+					
+					<div class="chat-input-wrapper">
+						<input type="text" id="chat-input" placeholder="enter a message..." />
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+	</body>
+
+</html>
