@@ -296,7 +296,7 @@ function setBomb(userObj) {
 			numCurrentBombs = userObj.currentBombs.length,
 			maxBombs = userObj.maxBombs;
 	
-	if (numCurrentBombs < maxBombs) {
+	if (numCurrentBombs < maxBombs && bombPositions[cellY][cellX] == 0) {
 		// ok to set bomb
 		console.log('setting bomb with radius '+userObj.bombRadius+' and maxBombs = '+maxBombs);
 		bombPositions[cellY][cellX] = userObj.clientId;
