@@ -45,8 +45,8 @@ var everyone = nowjs.initialize(app),		// everyone is initialized
 		usersHash = {},
 		usersCount = 1,
 		map = [],
-		NUM_ROWS = 21,
-		NUM_COLS = 21,
+		NUM_ROWS = 17,
+		NUM_COLS = 17,
 		mapPieceEnum = {
 			0: 'concrete',
 			1: 'wood',
