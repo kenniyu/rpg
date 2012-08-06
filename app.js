@@ -438,23 +438,24 @@ function setPlayerPosition(userObj, direction, prefix) {
 		for (var i = 0; i < prefix; i++) {
 			if ( canMoveTo(currentY, currentX + increment) ) {
 				currentX += increment;
+				userObj.cellX = currentX;
+				grabItem(userObj);
 			} else {
 				break;
 			}
 		}
-		userObj.cellX = currentX;
 	} else {
 		for (var i = 0; i < prefix; i++) {
 			if (map[currentY + increment] && canMoveTo(currentY + increment, currentX) ) {
 				currentY += increment;
+				userObj.cellY = currentY;
+				grabItem(userObj);
 			} else {
 				break;
 			}
 		}
-		userObj.cellY = currentY;
 	}
 	playerPositions[currentY][currentX] = userObj.id;
-	grabItem(userObj);
 }
 
 function grabItem(userObj) {
@@ -525,7 +526,9 @@ function endGame() {
 	gameHash['deadPlayers'] = [];
 	
 	// update game controls
-	everyone.now.showGameStartButton();
+	if (gameHash['currentPlayers'].length >= 2) {
+		everyone.now.showGameStartButton();		
+	}
 	everyone.now.hideGameInstructions();
 	
 	// we're ready for a new game
@@ -550,10 +553,12 @@ everyone.now.submitChat = function(message) {
 }
 
 function removePlayer(userObj) {
-	for (var row = 0; row < NUM_ROWS; row++) {
-		for (var col = 0; col < NUM_COLS; col++) {
-			if (playerPositions[row][col] == userObj.id) {
-				playerPositions[row][col] = 0;
+	if (playerPositions[0]) {
+		for (var row = 0; row < NUM_ROWS; row++) {
+			for (var col = 0; col < NUM_COLS; col++) {
+				if (playerPositions[row][col] == userObj.id) {
+					playerPositions[row][col] = 0;
+				}
 			}
 		}
 	}
