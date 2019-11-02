@@ -5,7 +5,7 @@
   "dependencies": {
     "express": "2.5.8",
     "jade": ">= 0.0.1",
-    "ejs": "0.8.x",
+    "ejs": "2.7.x",
     "connect": "2.4.x",
     "now": "0.8.x"
   },
