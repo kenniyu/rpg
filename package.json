@@ -6,7 +6,7 @@
     "express": "2.5.8",
     "jade": ">= 0.0.1",
     "ejs": "0.8.x",
-    "connect": "2.4.x",
+    "connect": "3.7.x",
     "now": "0.8.x"
   },
   "subdomain": "vimmerman3",
